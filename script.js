@@ -80,12 +80,6 @@ function loadRooferConfig() {
                 gsap.from(titleCompany, { opacity: 0, y: 20, duration: 1, delay: 0.5 });
             }
 
-            const cityInput = document.getElementById('cityInput');
-            if (cityInput && rooferConfig.city) {
-                cityInput.value = rooferConfig.city;
-                state.city = rooferConfig.city;
-            }
-
             const googleMapsBtn = document.getElementById('googleMapsBtn');
             if (googleMapsBtn && rooferConfig.googleReviewLink) {
                 googleMapsBtn.href = rooferConfig.googleReviewLink;
@@ -265,7 +259,7 @@ function prevStep() {
 }
 
 function validateStep(step) {
-    if (step === 1) return state.service !== '' && state.city !== '';
+    if (step === 1) return state.service !== '';
     return true;
 }
 
@@ -292,7 +286,7 @@ function updateUI(shouldScroll = false) {
 
 function generateReview() {
     const service = state.service;
-    const city = state.city;
+    const city = rooferConfig.city || 'your area';
     const prof = state.professionalism;
     const comm = state.communication;
     const time = state.timeliness;
