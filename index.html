@@ -226,20 +226,29 @@
                                 <p>Click to copy and then head to Google Maps.</p>
                             </div>
 
-                            <div class="generated-review-box glass-panel" id="reviewText">
-                                <!-- Review text will be injected here -->
+                            <div class="review-editor-container">
+                                <textarea id="reviewText" class="generated-review-box editable-review"
+                                    spellcheck="false"></textarea>
+                                <div class="edit-hint">You can edit the text above if you'd like to make it personal!
+                                </div>
                             </div>
 
-                            <div class="action-buttons vertical-stack mt-4">
-                                <button id="copyBtn" class="btn btn-primary full-width">
-                                    <span class="icon">📋</span> Copy Review
-                                </button>
-                                <a href="#" id="googleMapsBtn" class="btn btn-outline full-width mt-2" target="_blank">
-                                    <span class="icon">📍</span> Open Google Maps
-                                </a>
+                            <div class="action-steps vertical-stack mt-4">
+                                <div class="step-action">
+                                    <span class="step-num">Step 1</span>
+                                    <button id="copyBtn" class="btn btn-primary full-width">
+                                        <span class="icon">📋</span> Copy Review Text
+                                    </button>
+                                </div>
+                                <div class="step-action mt-2">
+                                    <span class="step-num">Step 2</span>
+                                    <a href="#" id="googleMapsBtn" class="btn btn-outline full-width" target="_blank">
+                                        <span class="icon">📍</span> Paste on Google Maps
+                                    </a>
+                                </div>
                             </div>
 
-                            <button class="btn-text prev-btn mt-4">Edit Details</button>
+                            <button class="btn-text prev-btn mt-4">Retry / Edit Details</button>
                         </div>
                     </div>
 

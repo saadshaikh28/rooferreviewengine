@@ -203,7 +203,8 @@ function initEventListeners() {
 
     // Copy Button
     document.getElementById('copyBtn').addEventListener('click', () => {
-        navigator.clipboard.writeText(state.generatedReview);
+        const textToCopy = document.getElementById('reviewText').value;
+        navigator.clipboard.writeText(textToCopy);
         const btn = document.getElementById('copyBtn');
         const originalText = btn.innerHTML;
         btn.innerHTML = "✅ Copied!";
@@ -301,5 +302,5 @@ function generateReview() {
     let finalReview = `${intro} ${body} ${extra ? extra + ' ' : ''}${closing}`;
 
     state.generatedReview = finalReview;
-    document.getElementById('reviewText').innerText = finalReview;
+    document.getElementById('reviewText').value = finalReview;
 }
