@@ -24,7 +24,7 @@ export async function onRequest(context) {
         }
 
         // Serving page as is if no config or if config is default
-        if (!configName || configName === 'roofersaad') {
+        if (!configName || configName === 'default') {
             return next();
         }
 

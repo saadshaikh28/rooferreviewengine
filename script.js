@@ -59,7 +59,7 @@ function loadRooferConfig() {
     }
 
     if (!clientName || isLocal) {
-        clientName = clientName || 'roofersaad';
+        clientName = clientName || 'default';
     }
 
     const configFile = `configs/${clientName}.json`;
@@ -72,6 +72,13 @@ function loadRooferConfig() {
             // Personalization
             const displayName = rooferConfig.companyName || rooferConfig.name;
             document.title = `${displayName} - Leave a Review`;
+
+            // Update Hero Title
+            const titleCompany = document.getElementById('titleCompanyName');
+            if (titleCompany) {
+                titleCompany.innerText = displayName;
+                gsap.from(titleCompany, { opacity: 0, y: 20, duration: 1, delay: 0.5 });
+            }
 
             const cityInput = document.getElementById('cityInput');
             if (cityInput && rooferConfig.city) {
