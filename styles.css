@@ -130,14 +130,16 @@ h3 {
     position: relative;
     display: inline-block;
     padding: 0.2rem 1rem;
-    background: linear-gradient(135deg, #FFD700 0%, #FACC15 100%);
+    background: linear-gradient(135deg, #F8FAFC 0%, #CBD5E1 50%, #F8FAFC 100%);
+    background-size: 200% auto;
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 15px rgba(250, 204, 21, 0.8));
+    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.4));
     text-transform: uppercase;
     letter-spacing: 0.15em;
     z-index: 1;
+    animation: chrome-shine 5s linear infinite;
 }
 
 .company-brand::before {
@@ -147,11 +149,21 @@ h3 {
     left: 50%;
     width: 120%;
     height: 140%;
-    background: radial-gradient(circle, rgba(250, 204, 21, 0.4) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
     transform: translate(-50%, -50%);
     z-index: -1;
     filter: blur(20px);
     animation: neon-pulse 3s ease-in-out infinite;
+}
+
+@keyframes chrome-shine {
+    0% {
+        background-position: 0% center;
+    }
+
+    100% {
+        background-position: 200% center;
+    }
 }
 
 @keyframes neon-pulse {
@@ -160,13 +172,11 @@ h3 {
     100% {
         opacity: 0.6;
         transform: translate(-50%, -50%) scale(1);
-        filter: blur(20px) hue-rotate(0deg);
     }
 
     50% {
         opacity: 1;
         transform: translate(-50%, -50%) scale(1.1);
-        filter: blur(30px) hue-rotate(20deg);
     }
 }
 
