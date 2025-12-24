@@ -731,37 +731,6 @@ input:checked+.slider:before {
     z-index: 5;
 }
 
-/* Marker Styling */
-.leaflet-container {
-    background: #f4f1ed !important;
-}
-
-.leaflet-control-zoom {
-    border: none !important;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4) !important;
-}
-
-.leaflet-control-zoom a {
-    background: var(--surface-glass-dark) !important;
-    color: #fff !important;
-    border: 1px solid var(--glass-border) !important;
-}
-
-.leaflet-control-zoom a:hover {
-    background: var(--accent-color) !important;
-    color: #000 !important;
-}
-
-.leaflet-control-attribution {
-    background: rgba(0, 0, 0, 0.5) !important;
-    color: var(--text-muted) !important;
-    font-size: 0.7rem !important;
-}
-
-.leaflet-control-attribution a {
-    color: var(--accent-color) !important;
-}
-
 /* Premium Slider Styling */
 .slider-container {
     width: 100%;
@@ -798,7 +767,7 @@ input[type="range"] {
     }
 
     to {
-        background-position: 100px 0, 0 0;
+        background-position: 0 -400px, 0 0;
     }
 }
 
@@ -844,6 +813,68 @@ input[type="range"]::-webkit-slider-thumb:hover {
     font-size: 0.8rem;
     font-weight: 600;
     margin-top: -0.5rem;
+}
+
+/* Glass Input & Textarea */
+.glass-input,
+.glass-textarea {
+    width: 100%;
+    padding: 1.25rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    color: #fff;
+    font-family: inherit;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.glass-textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.glass-input:focus,
+.glass-textarea:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 15px rgba(250, 204, 21, 0.1);
+}
+
+/* Generated Review Box */
+.generated-review-box {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 2rem;
+    border-radius: var(--radius-md);
+    margin: 2rem 0;
+    font-style: italic;
+    font-size: 1.25rem;
+    line-height: 1.8;
+    color: var(--text-dark);
+    text-align: left;
+    border-left: 4px solid var(--accent-color);
+    position: relative;
+    user-select: all;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.generated-review-box::before {
+    content: '"';
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    font-size: 4rem;
+    color: var(--accent-color);
+    opacity: 0.2;
+    font-family: serif;
+}
+
+/* Action Buttons Stack */
+.vertical-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
 }
 
 .full-width {
@@ -893,44 +924,6 @@ input[type="range"]::-webkit-slider-thumb:hover {
     box-shadow: 0 10px 25px rgba(59, 130, 246, 0.2);
 }
 
-.btn-call {
-    background-color: var(--primary-color);
-    color: white;
-}
-
-/* Blue Previous Button */
-.prev-btn.btn-outline {
-    border-color: #3B82F6;
-    color: #3B82F6;
-    background: transparent;
-}
-
-.prev-btn.btn-outline:hover {
-    background: #3B82F6;
-    color: white;
-}
-
-.results-header h3 {
-    color: #fff;
-    font-size: 2.25rem;
-    margin-bottom: 0.5rem;
-}
-
-.confetti-text {
-    color: var(--accent-color);
-    font-weight: 800;
-    font-size: 1.25rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 1.5rem;
-}
-
-.vertical-stack {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-}
-
 .icon {
     margin-right: 12px;
     font-size: 1.4rem;
@@ -976,6 +969,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
     gap: 0.75rem;
 }
 
+/* Responsive Overrides */
 @media (max-width: 600px) {
     .cta-text {
         display: none;
@@ -996,5 +990,107 @@ input[type="range"]::-webkit-slider-thumb:hover {
 
     .calculator-card {
         padding: 1.5rem;
+    }
+}
+
+/* City Detection UI */
+.city-detection-box {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.auto-city-badge {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(250, 204, 21, 0.15);
+    border: 1px solid var(--accent-color);
+    padding: 6px 14px;
+    border-radius: var(--radius-full);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    z-index: 5;
+}
+
+.auto-city-badge.hidden {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-50%) scale(0.9);
+}
+
+.pulse-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--accent-color);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--accent-color);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(250, 204, 21, 0.7);
+    }
+
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 10px rgba(250, 204, 21, 0);
+    }
+
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(250, 204, 21, 0);
+    }
+}
+
+.confirm-city-btn {
+    background: var(--accent-color);
+    color: #000;
+    border: none;
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 0.75rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-left: 5px;
+    transition: all 0.2s ease;
+}
+
+.confirm-city-btn:hover {
+    background: #fff;
+}
+
+/* Glass Input Adjustments */
+.glass-input {
+    padding-right: 180px;
+}
+
+/* Space for badge */
+
+@media (max-width: 600px) {
+    .auto-city-badge {
+        position: static;
+        transform: none;
+        margin-top: -0.5rem;
+        justify-content: center;
+    }
+
+    .glass-input {
+        padding-right: 1.25rem;
+    }
+
+    .auto-city-badge.hidden {
+        display: none;
     }
 }
