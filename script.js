@@ -26,9 +26,9 @@ let state = {
 };
 
 const labels = {
-    professionalism: ["Okay", "Great", "Outstanding"],
-    communication: ["Vague", "Good", "Crystal Clear"],
-    timeliness: ["On Time", "Quickly", "Record Time"]
+    professionalism: ["Good", "Professional", "Exceptional"],
+    communication: ["Responsive", "Proactive", "Flawless"],
+    timeliness: ["On Time", "Ahead of Schedule", "Record Time"]
 };
 
 // --- DOM ELEMENTS ---
@@ -178,12 +178,15 @@ function initEventListeners() {
         if (slider) {
             slider.addEventListener('input', (e) => {
                 const val = parseInt(e.target.value);
-                const label = labels[id === 'time' ? 'timeliness' : id][val - 1];
-                state[id === 'time' ? 'timeliness' : id] = label;
+                const category = id === 'time' ? 'timeliness' : id;
+                const label = labels[category][val - 1];
+                state[category] = label;
                 display.innerText = label;
                 updateSliderFill(slider);
+                updateLabelHighlight(id, val);
             });
             updateSliderFill(slider);
+            updateLabelHighlight(id, parseInt(slider.value));
         }
     });
 
@@ -197,18 +200,30 @@ function initEventListeners() {
     });
 
     // Copy Button
-    document.getElementById('copyBtn').addEventListener('click', () => {
-        const textToCopy = document.getElementById('reviewText').value;
-        navigator.clipboard.writeText(textToCopy);
-        const btn = document.getElementById('copyBtn');
-        const originalText = btn.innerHTML;
-        btn.innerHTML = "✅ Copied!";
-        btn.style.background = "#10b981";
-        setTimeout(() => {
-            btn.innerHTML = originalText;
-            btn.style.background = "";
-        }, 2000);
-    });
+    const copyBtn = document.getElementById('copyBtn');
+    if (copyBtn) {
+        copyBtn.addEventListener('click', () => {
+            const textToCopy = document.getElementById('reviewText').value;
+            navigator.clipboard.writeText(textToCopy);
+            const originalText = copyBtn.innerHTML;
+            copyBtn.innerHTML = "✅ Copied!";
+            copyBtn.style.background = "#10b981";
+            setTimeout(() => {
+                copyBtn.innerHTML = originalText;
+                copyBtn.style.background = "";
+            }, 2000);
+        });
+    }
+}
+
+function updateLabelHighlight(id, val) {
+    const labelsContainer = document.getElementById(`${id}Labels`);
+    if (labelsContainer) {
+        const spans = labelsContainer.querySelectorAll('span');
+        spans.forEach((span, idx) => {
+            span.classList.toggle('active', idx + 1 === val);
+        });
+    }
 }
 
 function updateSliderFill(slider) {
@@ -272,29 +287,58 @@ function generateReview() {
     const extra = document.getElementById('additionalComments').value;
 
     const intros = [
-        `We had our ${service} done in ${city} and the crew was ${prof.toLowerCase()} from start to finish.`,
-        `Amazing experience getting our ${service} in ${city}. The team was extremely ${prof.toLowerCase()}.`,
-        `If you need a ${service} in ${city}, look no further. This crew is ${prof.toLowerCase()}!`
+        `Huge thanks to the team for the recent ${service} in ${city}.`,
+        `Just had my ${service} completed in ${city} and couldn't be happier.`,
+        `If you're looking for a ${service} in ${city}, I highly recommend this crew.`,
+        `We were in need of a reliable ${service} in ${city} and they exceeded expectations.`,
+        `I am beyond impressed with the ${service} work done at our ${city} property.`,
+        `Professional and efficient ${service} service right here in ${city}!`,
+        `${city} homeowners, if you need a ${service}, these are your guys.`
     ];
 
-    const bodies = [
-        `Communication was ${comm.toLowerCase()} and they finished the job in ${time.toLowerCase()}.`,
-        `They were ${comm.toLowerCase()} throughout the process. The work was completed ${time.toLowerCase()}.`,
-        `I really appreciated how ${comm.toLowerCase()} they were. Plus, they finished in ${time.toLowerCase()}!`
-    ];
+    const profPhrases = {
+        "Good": [`The crew was very respectful throughout the project.`, `A very capable and hard-working team.`, `Everyone we dealt with was polite and professional.`],
+        "Professional": [`Their level of professionalism was top-notch from day one.`, `The team carried themselves with true expertise.`, `You can tell they take great pride in their professional conduct.`],
+        "Exceptional": [`The craftsmanship and professional standards were simply elite.`, `I've never seen a crew work with such meticulous attention to detail.`, `They treated our home with absolute care and unmatched professionalism.`]
+    };
+
+    const commPhrases = {
+        "Responsive": [`They were always quick to answer my questions.`, `Keeping in touch was easy and they stayed responsive throughout.`, `Solid communication from start to finish.`],
+        "Proactive": [`They kept us updated at every stage, often before we even asked.`, `I really appreciated their proactive approach to keeping us informed.`, `The communication was consistent and very helpful.`],
+        "Flawless": [`The communication was absolutely seamless and transparent.`, `I always knew exactly what was happening thanks to their perfect updates.`, `The easiest project communication I've ever experienced.`]
+    };
+
+    const timePhrases = {
+        "On Time": [`The project stayed right on schedule.`, `They showed up when they said they would and finished on time.`, `Reliable scheduling and timely completion.`],
+        "Ahead of Schedule": [`They actually beat the original deadline!`, `Work was completed faster than we anticipated.`, `Incredibly impressed with how quickly they knocked this out.`],
+        "Record Time": [`The speed and efficiency were truly remarkable.`, `I can't believe how fast they finished without cutting corners.`, `Lighting fast service that didn't compromise on quality.`]
+    };
 
     const closings = [
         `I’d absolutely recommend them to anyone in ${city}!`,
-        `Highly recommend their services!`,
-        `Great job all around, definitely worth calling for your next roofing project.`
+        `High-quality work and a great team all around.`,
+        `We will definitely be using them for any future needs!`,
+        `Best roofing experience we've had. Five stars!`,
+        `Don't hesitate to give them a call if you want the job done right.`,
+        `A true local gem in ${city}. Highly recommended!`,
+        `Very satisfied with the results. Thank you again!`
     ];
 
-    // Pick random structures
+    // Pick random phrases based on slider values
     const intro = intros[Math.floor(Math.random() * intros.length)];
-    const body = bodies[Math.floor(Math.random() * bodies.length)];
+
+    const profSet = profPhrases[prof];
+    const profChoice = profSet[Math.floor(Math.random() * profSet.length)];
+
+    const commSet = commPhrases[comm];
+    const commChoice = commSet[Math.floor(Math.random() * commSet.length)];
+
+    const timeSet = timePhrases[time];
+    const timeChoice = timeSet[Math.floor(Math.random() * timeSet.length)];
+
     const closing = closings[Math.floor(Math.random() * closings.length)];
 
-    let finalReview = `${intro} ${body} ${extra ? extra + ' ' : ''}${closing}`;
+    let finalReview = `${intro} ${profChoice} ${commChoice} ${timeChoice} ${extra ? extra + ' ' : ''}${closing}`;
 
     state.generatedReview = finalReview;
     document.getElementById('reviewText').value = finalReview;
