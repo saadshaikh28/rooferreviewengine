@@ -10,7 +10,6 @@
 let rooferConfig = {
     name: "Roofer",
     companyName: "Roofing Experts",
-    city: "Austin",
     serviceArea: "Texas",
     googleReviewLink: "#"
 };
@@ -19,7 +18,6 @@ let rooferConfig = {
 let state = {
     step: 1,
     service: '',
-    city: '',
     professionalism: 'Outstanding',
     communication: 'Crystal Clear',
     timeliness: 'Record Time',
@@ -267,7 +265,7 @@ function updateUI(shouldScroll = false) {
 
 function generateReview() {
     const service = state.service;
-    const city = rooferConfig.city || 'your area';
+    const city = rooferConfig.serviceArea || 'your area';
     const prof = state.professionalism;
     const comm = state.communication;
     const time = state.timeliness;
